@@ -95,7 +95,7 @@
       if (type === "password") {
         togglePassword.innerHTML = '<i class="far fa-eye"></i>';
       } else {
-        togglePassword.innerHTML = '<i class="far fa-eye-slash"></i>';
+        togglePassword.innerHTML = '<i class="far fa-eye"></i>';
       }
     });
 
@@ -111,10 +111,10 @@
       const password = document.getElementById("password").value;
 
       // Пример проверки логина и пароля
-      if (username === "admin" && password === "password123") {
+      if (username === "admin" && password === "123456Ds") {
         window.location.href = "admin-dashboard.html"; // Переход на страницу admin-dashboard
       } else {
-        document.getElementById("error-message").innerText = "Неверный логин или пароль!";
+        document.getElementById("error-message").innerText = "Incorect Login or Password!";
       }
     });
   </script>
