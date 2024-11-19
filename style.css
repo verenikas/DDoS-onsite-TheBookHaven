@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Стиль для уведомлений */
+.notification {
+    display: none;
+    background-color: #f44336;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+/* Стили для кнопки */
+.admin-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px; /* Размер кнопки */
+    height: 50px; /* Размер кнопки */
+    background-color: rgba(0, 0, 0, 0.3); /* Полупрозрачный фон */
+    border-radius: 50%; /* Круглая кнопка */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6; /* Начальная полупрозрачность */
+    transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    color: white; /* Цвет иконки */
+  }
+  
+  .admin-button:hover {
+    opacity: 1; /* Кнопка становится более видимой при наведении */
+  }
+  
+  /* Стили для иконки внутри кнопки */
+  .admin-button i {
+    font-size: 24px; /* Размер иконки */
+  }
+  /* Позиционирование формы */
+.login-side {
+    position: fixed; /* Фиксированное позиционирование */
+    bottom: 20px;    /* Расположение внизу */
+    left: 20px;      /* Расположение слева */
+    width: 300px;    /* Ширина формы */
+    background-color: #fff; /* Белый фон */
+    padding: 20px;   /* Отступы внутри формы */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+  }
+  
+  .login-form {
+    text-align: center; /* Центрирование текста */
+  }
+  
+  .login-form input {
+    width: 100%;         /* Ширина полей ввода */
+    padding: 10px;       /* Отступы внутри поля */
+    margin-bottom: 10px; /* Отступы между полями */
+    border: 1px solid #ccc; /* Граница полей */
+    border-radius: 5px;  /* Скругленные углы */
+  }
+  
+  .login-form button {
+    width: 100%;         /* Ширина кнопки */
+    padding: 10px;       /* Отступы внутри кнопки */
+    background-color: #007BFF; /* Цвет кнопки */
+    color: white;        /* Цвет текста кнопки */
+    border: none;        /* Убираем границу */
+    border-radius: 5px;  /* Скругленные углы кнопки */
+    cursor: pointer;     /* Указатель при наведении */
+  }
+  
+  .login-form button:hover {
+    background-color: #0056b3; /* Цвет кнопки при наведении */
+  }
+  

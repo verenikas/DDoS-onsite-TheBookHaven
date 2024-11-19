@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Details - Activity Overview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .sidebar {
+      width: 180px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+    }
+    .sidebar button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      text-align: left;
+    }
+    .sidebar button:hover {
+      background-color: #555;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+      width: calc(100% - 200px);
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .activity-summary {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .solution-section {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .solution-section button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .solution-section button:hover {
+      background-color: #45a049;
+    }
+    .solution-section .ignore-btn {
+      background-color: #f44336;
+    }
+    .solution-section .ignore-btn:hover {
+      background-color: #e53935;
+    }
+    .ip-list {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .ip-list ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .ip-list li {
+      background-color: #eee;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+    }
+    .blocked {
+      background-color: #f44336;
+      color: white;
+      cursor: not-allowed;
+    }
+    .server-info {
+      background-color: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .server-info span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button>Orders</button>
+    <button>Add Books</button>
+    <button>Manage Users</button>
+    <button>Settings</button>
+    <button>Reports</button>
+  </div>
+
+  <!-- Main content -->
+  <div class="content">
+    <h1>Admin - Activity Details</h1>
+    
+    <div class="activity-summary">
+      <h2>Activity Overview</h2>
+      <p>Here is a detailed overview of the high activity levels detected:</p>
+      <ul>
+        <li><strong>Time of Peak Activity:</strong> 10:05 AM</li>
+        <li><strong>Peak Activity Level:</strong> 90%</li>
+        <li><strong>Duration of High Activity:</strong> 15 minutes</li>
+        <li><strong>Possible Cause:</strong> High traffic on the website</li>
+        <li><strong>Recommended Actions:</strong> Block suspicious IPs, monitor traffic</li>
+      </ul>
+    </div>
+
+    <!-- IP List -->
+    <div class="ip-list">
+      <h3>Suspicious IP Addresses</h3>
+      <ul>
+        <li id="ip1">192.168.0.1 - 50 requests/min <button id="block1" onclick="blockIP('192.168.0.1')">Block</button></li>
+        <li id="ip2">203.0.113.12 - 45 requests/min <button id="block2" onclick="blockIP('203.0.113.12')">Block</button></li>
+        <li id="ip3">198.51.100.7 - 40 requests/min <button id="block3" onclick="blockIP('198.51.100.7')">Block</button></li>
+      </ul>
+    </div>
+
+    <div class="solution-section">
+      <h2>Suggested Solutions</h2>
+      <p>To mitigate the issue, you may consider the following actions:</p>
+      <button onclick="checkServer()">Check Server Load</button>
+      <button class="ignore-btn" onclick="ignoreWarning()">Ignore Warning</button>
+    </div>
+
+    <!-- Server Load Info -->
+    <div class="server-info" id="serverInfo" style="display:none;">
+      <h3>Server Load Information</h3>
+      <p><span>CPU Usage:</span> <span id="cpuUsage">Loading...</span></p>
+      <p><span>Memory Usage:</span> <span id="memoryUsage">Loading...</span></p>
+      <p><span>Active Connections:</span> <span id="activeConnections">Loading...</span></p>
+    </div>
+  </div>
+
+  <script>
+    // Проверка серверной нагрузки
+    function checkServer() {
+      // Имитация данных о сервере
+      const cpuUsage = Math.floor(Math.random() * 100) + '%';
+      const memoryUsage = Math.floor(Math.random() * 100) + '%';
+      const activeConnections = Math.floor(Math.random() * 500) + ' connections';
+
+      // Обновление информации о серверной нагрузке
+      document.getElementById('cpuUsage').textContent = cpuUsage;
+      document.getElementById('memoryUsage').textContent = memoryUsage;
+      document.getElementById('activeConnections').textContent = activeConnections;
+
+      // Отображение данных о нагрузке на сервер
+      document.getElementById('serverInfo').style.display = 'block';
+
+      // Лог для отладки
+      console.log("Server data: CPU: " + cpuUsage + ", Memory: " + memoryUsage + ", Connections: " + activeConnections);
+    }
+
+    function blockIP(ip) {
+      alert('IP address ' + ip + ' has been blocked.');
+      const ipItem = document.querySelector(`#ip${ip === '192.168.0.1' ? '1' : ip === '203.0.113.12' ? '2' : '3'}`);
+      const blockBtn = ipItem.querySelector('button');
+      blockBtn.textContent = 'Blocked';
+      blockBtn.classList.add('blocked');
+      blockBtn.setAttribute('disabled', true);
+    }
+
+    function ignoreWarning() {
+      alert('The warning will be ignored.');
+    }
+  </script>
+</body>
+</html>
+<!-- Код для перехода обратно на страницу admin-dashboard.html -->
+<a href="admin-dashboard.html">
+    <button type="button" class="submit-btn">Back to Dashboard</button>
+  </a>
+  
+  <!-- Код для перехода на главную страницу -->
+  <a href="index.html">
+    <button type="button" class="submit-btn">Go to Home</button>
+  </a>
+  

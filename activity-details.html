@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Details</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Risk Classification and Monitoring</h1>
+
+        <!-- Форма для ввода IP -->
+        <div class="classification">
+            <label for="ipInput">Enter IP Address:</label>
+            <input type="text" id="ipInput" placeholder="e.g. 192.168.1.1">
+            <button id="classifyRisk">Classify Risk</button>
+            <p id="riskLevel">Risk Level: Low</p>
+        </div>
+
+        <!-- Оценка риска -->
+        <div class="risk-assessment">
+            <button id="assessRisk" disabled>Assess Risk</button>
+            <p id="riskAssessmentResult">Assessment Result: Normal</p>
+            <div id="detailedResult" style="display:none;">
+                <p><a href="#" id="resultLink">View Full Report</a></p>
+            </div>
+        </div>
+
+        <!-- Мониторинг активности -->
+        <div class="monitoring">
+            <button id="startMonitoring" disabled>Start Monitoring</button>
+            <ul id="activityLog"></ul>
+        </div>
+
+        <!-- Кнопка для выполнения действий с подозрительными IP -->
+        <button id="takeAction" style="display:none;">Take Action on Suspicious IPs</button>
+
+        <!-- График рисков -->
+        <canvas id="riskChart" width="400" height="200"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Подключаем Chart.js -->
+        <script src="script.js"></script> <!-- Подключаем ваш JS файл -->
+    </div>
+
+    <script>
+        // Пример подозрительных IP-адресов
+        const suspiciousIps = [
+            { ip: "192.168.1.1", risk: "High" },
+            { ip: "10.0.0.1", risk: "High" },
+            { ip: "192.168.2.3", risk: "Medium" },
+            { ip: "10.1.1.4", risk: "High" }
+        ];
+
+        let currentRiskLevel = "Low"; // Переменная для хранения текущего уровня риска
+        let currentIp = ""; // Переменная для хранения введенного IP
+
+        // Функция для классификации рисков
+        document.getElementById('classifyRisk').addEventListener('click', function() {
+            currentIp = document.getElementById('ipInput').value;
+
+            // Пример классификации
+            if (currentIp.startsWith("192.168")) {
+                currentRiskLevel = "Medium";  // Средний риск для локальных IP
+            } else if (currentIp.startsWith("10.")) {
+                currentRiskLevel = "High";  // Высокий риск для внешних IP
+            } else {
+                currentRiskLevel = "Low"; // Низкий риск по умолчанию
+            }
+
+            document.getElementById('riskLevel').textContent = `Risk Level: ${currentRiskLevel}`;
+
+            // Включаем кнопку "Assess Risk" после классификации
+            document.getElementById('assessRisk').disabled = false;
+        });
+
+        // Функция для оценки рисков
+        document.getElementById('assessRisk').addEventListener('click', function() {
+            let riskAssessment = "Normal";  // Оценка риска по умолчанию
+
+            // Пример оценки риска, с учетом классификации
+            if (currentRiskLevel === "High" && currentIp === "192.168.1.1") {
+                riskAssessment = "High threat detected!";  // Угроза для этого IP
+            }
+
+            document.getElementById('riskAssessmentResult').textContent = `Assessment Result: ${riskAssessment}`;
+
+            // Показываем ссылку на подробный отчет
+            const resultLink = document.getElementById('resultLink');
+            resultLink.href = "#";  // Ссылка на полный отчет (пока пустая, можно добавить функциональность)
+            document.getElementById('detailedResult').style.display = "block";
+
+            // Включаем кнопку "Start Monitoring"
+            document.getElementById('startMonitoring').disabled = false;
+        });
+
+        // Функция для мониторинга активности и отображения подозрительных IP
+        document.getElementById('startMonitoring').addEventListener('click', function() {
+            const log = document.getElementById('activityLog');
+            log.innerHTML = "";  // Очищаем лог перед добавлением новых записей
+
+            // Выводим подозрительные IP
+            suspiciousIps.forEach(ipObj => {
+                const newLog = document.createElement('li');
+                newLog.textContent = `Suspicious activity detected from IP: ${ipObj.ip} (Risk: ${ipObj.risk})`;
+                log.appendChild(newLog);
+            });
+
+            // Показываем кнопку для действия с IP
+            document.getElementById('takeAction').style.display = "block";
+        });
+
+        // Функция для выполнения действия с подозрительными IP
+        document.getElementById('takeAction').addEventListener('click', function() {
+            alert("Taking action on suspicious IPs...");
+            // Здесь можно добавить действия, такие как блокировка IP или уведомления
+        });
+
+        // Настройка графика для дашборда
+        window.onload = function() {
+            const ctx = document.getElementById('riskChart').getContext('2d');
+            const riskChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Low', 'Medium', 'High'],
+                    datasets: [{
+                        label: 'Risk Levels',
+                        data: [10, 5, 2],  // Пример данных
+                        backgroundColor: ['green', 'orange', 'red'],
+                    }]
+                }
+            });
+        };
+    </script>
+</body>
+</html>

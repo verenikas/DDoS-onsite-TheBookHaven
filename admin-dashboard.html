@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .sidebar {
+      width: 180px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+    }
+    .sidebar button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      text-align: left;
+    }
+    .sidebar button:hover {
+      background-color: #555;
+    }
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+      width: calc(100% - 200px);
+    }
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin-top: 30px;
+    }
+    /* Style for the modal warning */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      width: 300px;
+    }
+    .modal button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+    .modal button:hover {
+      background-color: #45a049;
+    }
+    .ignore-btn {
+      background-color: #f44336;
+    }
+    .ignore-btn:hover {
+      background-color: #e53935;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button>Orders</button>
+    <button>Add Books</button>
+    <button>Manage Users</button>
+    <button>Settings</button>
+    <button>Reports</button>
+  </div>
+
+  <!-- Main content -->
+  <div class="content">
+    <h1>Admin Dashboard</h1>
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Modal for high activity warning -->
+  <div id="warningModal" class="modal">
+    <div class="modal-content">
+      <h2>Warning: High Activity Detected!</h2>
+      <p>There has been a high level of activity. Do you wish to view more details?</p>
+      <button id="viewDetailsBtn">View Details</button>
+      <button id="ignoreBtn" class="ignore-btn">Ignore</button>
+    </div>
+  </div>
+
+  <script>
+    // Chart.js setup for the moving chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const data = {
+      labels: [],
+      datasets: [{
+        label: 'Activity over Time',
+        data: [],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        tension: 0.1,
+        fill: false,
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            ticks: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+          }
+        }
+      }
+    };
+
+    const myChart = new Chart(ctx, config);
+
+    // Simulate activity data for the chart
+    let time = 0;
+    const interval = setInterval(() => {
+      time++;
+      const activity = Math.random() * 100; // Random activity value
+      data.labels.push(time);
+      data.datasets[0].data.push(activity);
+
+      if (data.labels.length > 20) {
+        data.labels.shift();
+        data.datasets[0].data.shift();
+      }
+
+      myChart.update();
+    }, 1000);
+
+    // Show warning after 10 seconds
+    setTimeout(() => {
+      document.getElementById('warningModal').style.display = 'flex';
+    }, 10000);
+
+    // Handling button actions in the modal
+    document.getElementById('viewDetailsBtn').addEventListener('click', function () {
+      // Redirect to details page (replace with your desired page)
+      window.location.href = 'admin-details.html'; // Adjust the URL as needed
+    });
+
+    document.getElementById('ignoreBtn').addEventListener('click', function () {
+      // Close the modal without any action
+      document.getElementById('warningModal').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+<script src="js/your-file.js"></script>
+<link rel="stylesheet" href="style.css">
